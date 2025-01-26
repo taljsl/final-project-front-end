@@ -33,7 +33,7 @@ export const refreshToken = async (token) => {
 
 export const getUserProfile = async (token) => {
   try {
-    const response = await api.get("/profile/", {
+    const response = await api.get("/api/users/profile/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
