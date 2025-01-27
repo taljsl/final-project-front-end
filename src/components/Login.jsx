@@ -1,5 +1,6 @@
-import React from "react";
+import { useState } from "react";
 import { loginUser } from "../Services/ServiceFunctions";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ setToken }) => {
   const [credentials, setCredentials] = useState({
@@ -7,13 +8,16 @@ const Login = ({ setToken }) => {
     password: "",
   });
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
       const data = await loginUser(credentials);
       setToken(data.access);
+      localStorage.setItem("token", data.access);
       console.log("Logged in Successfully", data);
+      navigate("/profile");
     } catch (err) {
       setError("Invalid Username or password");
       console.error("Error during login", err);
