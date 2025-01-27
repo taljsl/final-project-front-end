@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import './ChatPage.css'; // Import the CSS file
 
 const socket = io(import.meta.env.VITE_SOCKET_URL);
 
@@ -31,19 +32,33 @@ const ChatPage = () => {
 
   const sendMessage = () => {
     const username = localStorage.getItem("username");
-    socket.emit("chat-message", { username, message });
+    const newMessage = { username, message };
+
+    // Emit the message to the server
+    socket.emit("chat-message", newMessage);
+
+    // Add the message to the chat locally (for immediate display)
+    setMessages((prev) => [...prev, newMessage]);
+
+    // Clear the input field
     setMessage("");
   };
 
   return (
     <div>
       <h1>Chat Room</h1>
-      <div>
+      <div className="messages-container">
         {messages.map((msg, index) => (
-          <p key={index}>{msg}</p>
+          <p key={index}>
+            <strong>{msg.username}: </strong>{msg.message}
+          </p>
         ))}
       </div>
-      <input value={message} onChange={(e) => setMessage(e.target.value)} />
+      <input
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Type your message"
+      />
       <button onClick={sendMessage}>Send</button>
     </div>
   );

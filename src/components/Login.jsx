@@ -9,6 +9,8 @@ const Login = () => {
     const response = await loginUser(formData);
     if (response.token) {
       localStorage.setItem("token", response.token);
+      localStorage.setItem("username", response.username); 
+
       alert("Login successful!");
       window.location.href = "/profile";
     } else {
