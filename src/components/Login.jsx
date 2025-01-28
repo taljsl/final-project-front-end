@@ -2,6 +2,7 @@ import { useState } from "react";
 import { loginUser } from "../Services/ServiceFunctions";
 import { useNavigate } from "react-router-dom";
 
+
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -12,7 +13,7 @@ const Login = () => {
     if (response.token) {
       localStorage.setItem("token", response.token);
       localStorage.setItem("username", response.username);
-
+      localStorage.setItem("email", response.email)
       alert("Login successful!");
       setIsLoggedIn(true);
       navigate("/profile");
