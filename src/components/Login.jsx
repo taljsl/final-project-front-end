@@ -11,6 +11,7 @@ const Login = () => {
     e.preventDefault();
     const response = await loginUser(formData);
     if (response.token) {
+      // Add information to local storage so that profile can pull it
       localStorage.setItem("token", response.token);
       localStorage.setItem("username", response.username);
       localStorage.setItem("email", response.email)

@@ -11,7 +11,7 @@ const ChatPage = () => {
   useEffect(() => {
     const username = localStorage.getItem("username");
     socket.emit("join", username);
-
+    // Listen for incoming messages
     socket.on("chat-message", (data) => {
       setMessages((prev) => [...prev, data]);
       // console.log(messages)
@@ -27,6 +27,7 @@ const ChatPage = () => {
     
     return () => {
       socket.emit("leave", username);
+      // Without this line each message rendrs twice  in our message container
       socket.off("chat-message")
       // socket.disconnect();
     };
@@ -39,11 +40,15 @@ const ChatPage = () => {
     // Emit the message to the server
     socket.emit("chat-message", newMessage);
 
-
     // Clear the input field
     setMessage("");
   };
-
+  
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      sendMessage();
+    }
+  };
   return (
     <div>
       <h1>Chat Room</h1>
@@ -58,6 +63,7 @@ const ChatPage = () => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Type your message"
+        onKeyUp={handleKeyPress}
       />
       <button onClick={sendMessage}>Send</button>
     </div>
