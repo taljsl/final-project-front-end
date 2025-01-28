@@ -1,27 +1,15 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-
-  useEffect(() => {
-    if (token) {
-      navigate("/profile");
-    }
-  }, [token, navigate]);
-
   return (
-    <div>
-      {!token && (
-        <>
-          <h1>Welcome To Josh's Final Project: A Chatroom Application</h1>
-          <div>
-            <button onClick={() => navigate("/register")}>Register</button>
-            <button onClick={() => navigate("/login")}>Login</button>
-          </div>
-        </>
-      )}
+    <div className="home-container">
+      <h1>Welcome to the Chat App!</h1>
+      <Link to="/login">
+        <button>Login</button>
+      </Link>
+      <Link to="/register">
+        <button>Register</button>
+      </Link>
     </div>
   );
 };

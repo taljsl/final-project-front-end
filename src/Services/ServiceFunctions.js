@@ -1,45 +1,21 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_URL,
-});
-
-export const registerUSER = async (data) => {
+const api = import.meta.env.VITE_API_URL + '/api';
+// const api = import.meta.env.VITE_API_URL;
+export const registerUser = async (data) => {
   try {
-    const response = await api.post("/api/users/register/", data);
+    const response = await axios.post(`${api}/register`, data);
     return response.data;
   } catch (error) {
-    console.error("Error During Registration", error.response?.data);
+    return { success: false, message: error.message };
   }
 };
 
-export const loginUser = async (credentials) => {
+export const loginUser = async (data) => {
   try {
-    const response = await api.post("/api/users/token/", credentials);
+    const response = await axios.post(`${api}/login`, data);
     return response.data;
   } catch (error) {
-    console.error("Error during login: ", error);
-  }
-};
-
-export const refreshToken = async (token) => {
-  try {
-    const response = await api.post("/api/users/token/refresh/", { refresh: token });
-    return response.data;
-  } catch (error) {
-    console.error("Error during refresh", error);
-  }
-};
-
-export const getUserProfile = async (token) => {
-  try {
-    const response = await api.get("/api/users/profile/", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching profile", error);
+    return { success: false, message: error.message };
   }
 };
