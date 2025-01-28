@@ -1,0 +1,24 @@
+/* Styling by GPT */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full height */
+    text-align: center;
+  }
+  
+  button {
+    margin: 10px; /* Add space between buttons */
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    background-color: #646cff; /* Primary color */
+    color: white;
+    border: none;
+    transition: background-color 0.3s; /* Smooth transition */
+  }
+  
+  button:hover {
+    background-color: #535bf2; /* Darker shade on hover */
+  }
